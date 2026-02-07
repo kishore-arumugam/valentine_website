@@ -17,9 +17,17 @@ body {
 }
 
 @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Floating Hearts Background */
@@ -44,12 +52,15 @@ body {
         transform: translateY(100vh) rotate(0deg);
         opacity: 0;
     }
+
     10% {
         opacity: 0.7;
     }
+
     90% {
         opacity: 0.7;
     }
+
     100% {
         transform: translateY(-100px) rotate(720deg);
         opacity: 0;
@@ -68,7 +79,7 @@ body {
     border-radius: 30px;
     padding: 50px 60px;
     text-align: center;
-    box-shadow: 
+    box-shadow:
         0 25px 80px rgba(233, 30, 99, 0.3),
         0 0 100px rgba(255, 107, 157, 0.2),
         inset 0 0 60px rgba(255, 255, 255, 0.5);
@@ -79,8 +90,15 @@ body {
 }
 
 @keyframes cardFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .heart-icon {
@@ -90,10 +108,23 @@ body {
 }
 
 @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.1); }
-    50% { transform: scale(1); }
-    75% { transform: scale(1.15); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    75% {
+        transform: scale(1.15);
+    }
 }
 
 .title {
@@ -109,8 +140,13 @@ body {
 }
 
 @keyframes shimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
 }
 
 .subtitle {
@@ -188,8 +224,15 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 /* Messages that appear when trying to click No */
@@ -208,18 +251,21 @@ body {
 }
 
 @keyframes bubblePop {
-    0% { 
+    0% {
         transform: scale(0) translateY(0);
         opacity: 0;
     }
+
     20% {
         transform: scale(1.2) translateY(-10px);
         opacity: 1;
     }
+
     40% {
         transform: scale(1) translateY(-20px);
         opacity: 1;
     }
+
     100% {
         transform: scale(0.8) translateY(-50px);
         opacity: 0;
@@ -249,9 +295,19 @@ body {
 }
 
 @keyframes celebrationBounce {
-    0% { transform: scale(0); opacity: 0; }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .big-heart {
@@ -286,8 +342,16 @@ body {
 }
 
 @keyframes shimmerWhite {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 1; text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    }
 }
 
 /* Confetti */
@@ -305,6 +369,7 @@ body {
         transform: translateY(-100px) rotate(0deg);
         opacity: 1;
     }
+
     100% {
         transform: translateY(100vh) rotate(720deg);
         opacity: 0;
@@ -313,37 +378,181 @@ body {
 
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 100vh;
+        padding: 10px 0;
+    }
+
     .card {
-        padding: 35px 25px;
-        margin: 15px;
+        padding: 30px 20px;
+        margin: 10px;
+        border-radius: 25px;
+        max-width: 95vw;
+        animation: none;
+        /* Disable float animation on mobile for better performance */
     }
-    
+
+    .heart-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
     .title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        line-height: 1.3;
     }
-    
+
     .subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
     }
-    
-    .btn {
-        padding: 12px 30px;
-        font-size: 1rem;
+
+    .gif-container {
+        margin: 15px 0;
     }
-    
+
     .love-gif {
-        max-width: 220px;
+        max-width: 180px;
     }
-    
-    .celebration-title {
-        font-size: 2rem;
+
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin: 20px 0 15px;
+        min-height: 120px;
     }
-    
-    .celebration-gif {
-        width: 250px;
+
+    .btn {
+        padding: 14px 40px;
+        font-size: 1.1rem;
+        min-width: 160px;
+        /* Better touch targets */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
-    
+
+    .btn-yes {
+        order: -1;
+        /* Put Yes button first on mobile */
+    }
+
+    .hint {
+        font-size: 0.85rem;
+        padding: 0 10px;
+    }
+
+    .message-bubble {
+        font-size: 0.9rem;
+        padding: 12px 20px;
+        max-width: 80vw;
+        text-align: center;
+    }
+
+    /* Celebration screen mobile */
+    .celebration-content {
+        padding: 20px;
+    }
+
     .big-heart {
-        font-size: 70px;
+        font-size: 60px;
+    }
+
+    .celebration-title {
+        font-size: 1.8rem;
+        padding: 0 15px;
+    }
+
+    .celebration-text {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    }
+
+    .celebration-gif {
+        width: 220px;
+        max-width: 80vw;
+    }
+
+    .love-message {
+        font-size: 1.4rem;
+        padding: 0 15px;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 380px) {
+    .card {
+        padding: 25px 15px;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .heart-icon {
+        font-size: 40px;
+    }
+
+    .love-gif {
+        max-width: 150px;
+    }
+
+    .btn {
+        padding: 12px 35px;
+        font-size: 1rem;
+    }
+
+    .celebration-title {
+        font-size: 1.5rem;
+    }
+
+    .celebration-gif {
+        width: 180px;
+    }
+}
+
+/* Landscape mode on phones */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        overflow-y: auto;
+    }
+
+    .card {
+        padding: 20px 25px;
+        margin: 10px auto;
+    }
+
+    .heart-icon {
+        font-size: 35px;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        margin-bottom: 10px;
+    }
+
+    .gif-container {
+        margin: 10px 0;
+    }
+
+    .love-gif {
+        max-width: 120px;
+    }
+
+    .buttons-container {
+        flex-direction: row;
+        margin: 15px 0 10px;
+    }
+
+    .celebration-content {
+        transform: scale(0.8);
     }
 }
