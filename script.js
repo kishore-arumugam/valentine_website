@@ -39,7 +39,7 @@ const sadGifs = [
 // Create floating hearts in background
 function createFloatingHearts() {
     const hearts = ['💕', '💖', '💗', '❤️', '💘', '💝', '✨', '🌸'];
-    
+
     setInterval(() => {
         const heart = document.createElement('span');
         heart.className = 'floating-heart';
@@ -48,23 +48,35 @@ function createFloatingHearts() {
         heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
         heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
         heartsContainer.appendChild(heart);
-        
+
         // Remove heart after animation
         setTimeout(() => heart.remove(), 10000);
     }, 500);
 }
+
+// Detect if mobile device
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 600;
 
 // Show fun message when trying to click No
 function showMessage(x, y) {
     const message = document.createElement('div');
     message.className = 'message-bubble';
     message.textContent = funnyMessages[messageIndex];
-    message.style.left = x + 'px';
-    message.style.top = y + 'px';
+
+    // Better positioning for mobile - center messages
+    if (isMobile) {
+        message.style.left = '50%';
+        message.style.top = '20%';
+        message.style.transform = 'translateX(-50%)';
+    } else {
+        message.style.left = Math.min(Math.max(x, 100), window.innerWidth - 200) + 'px';
+        message.style.top = Math.max(y - 50, 50) + 'px';
+    }
+
     document.body.appendChild(message);
-    
+
     messageIndex = (messageIndex + 1) % funnyMessages.length;
-    
+
     // Remove message after animation
     setTimeout(() => message.remove(), 2000);
 }
@@ -72,65 +84,65 @@ function showMessage(x, y) {
 // Make the No button escape
 function escapeButton(e) {
     const btn = noBtn;
-    const container = document.querySelector('.buttons-container');
     const card = document.querySelector('.card');
-    
+
     // Get card boundaries
     const cardRect = card.getBoundingClientRect();
     const btnRect = btn.getBoundingClientRect();
-    
-    // Calculate a random position within the card
-    const maxX = cardRect.width - btnRect.width - 40;
-    const maxY = cardRect.height - btnRect.height - 100;
-    
+
+    // Smaller movement range for mobile
+    const multiplier = isMobile ? 0.6 : 1;
+    const maxX = (cardRect.width - btnRect.width - 40) * multiplier;
+    const maxY = isMobile ? 80 : 150;
+
     let newX, newY;
-    
+
     // Make button move more erratically as escape count increases
     if (escapeCount < 3) {
-        // Simple escape - just move away from cursor
-        newX = Math.random() * maxX - maxX/2;
-        newY = Math.random() * 100 - 50;
+        // Simple escape - just move away
+        newX = (Math.random() - 0.5) * maxX;
+        newY = (Math.random() - 0.5) * maxY * 0.5;
     } else if (escapeCount < 6) {
         // Move more randomly
         newX = (Math.random() - 0.5) * maxX;
-        newY = (Math.random() - 0.5) * 150;
+        newY = (Math.random() - 0.5) * maxY;
     } else {
         // Button gets really scared - moves a lot!
-        newX = (Math.random() - 0.5) * (maxX * 1.5);
-        newY = (Math.random() - 0.5) * 200;
-        
+        newX = (Math.random() - 0.5) * maxX * 1.2;
+        newY = (Math.random() - 0.5) * maxY * 1.2;
+
         // Shrink the No button over time
         const shrinkFactor = Math.max(0.5, 1 - (escapeCount - 6) * 0.1);
         btn.style.transform = `translate(${newX}px, ${newY}px) scale(${shrinkFactor})`;
-        
+
         // Make Yes button grow!
         const growFactor = 1 + (escapeCount - 6) * 0.1;
         yesBtn.style.transform = `scale(${Math.min(growFactor, 1.5)})`;
-        
+
         escapeCount++;
-        showMessage(e.clientX, e.clientY - 50);
-        
+        showMessage(e.clientX || window.innerWidth / 2, e.clientY || 100);
+
         // Update hint text
         if (escapeCount > 8) {
             hint.textContent = "Just give up and say Yes! 💖";
         } else if (escapeCount > 5) {
             hint.textContent = "The No button is getting smaller... 😏";
         }
-        
+
         // Change GIF occasionally
         if (escapeCount % 3 === 0) {
             loveGif.src = sadGifs[Math.floor(Math.random() * sadGifs.length)];
         }
-        
+
         return;
     }
-    
+
     btn.classList.add('escaping');
     btn.style.transform = `translate(${newX}px, ${newY}px)`;
-    
+
     escapeCount++;
-    showMessage(e.clientX, e.clientY - 50);
-    
+    showMessage(e.clientX || window.innerWidth / 2, e.clientY || 100);
+
     // Update hint after a few tries
     if (escapeCount > 2) {
         hint.textContent = "Told you! That button doesn't want to be clicked! 😄";
@@ -153,13 +165,13 @@ noBtn.addEventListener('click', (e) => {
 yesBtn.addEventListener('click', () => {
     // Hide main container
     mainContainer.style.display = 'none';
-    
+
     // Show celebration
     celebrationContainer.style.display = 'flex';
-    
+
     // Create confetti!
     createConfetti();
-    
+
     // Play some celebration sounds could be added here
 });
 
@@ -167,12 +179,12 @@ yesBtn.addEventListener('click', () => {
 function createConfetti() {
     const colors = ['#ff6b9d', '#e91e63', '#ff8a80', '#ffab91', '#fff', '#ffd700', '#ff69b4'];
     const shapes = ['❤️', '💕', '💖', '✨', '🎉', '💗', '🌸'];
-    
+
     for (let i = 0; i < 100; i++) {
         setTimeout(() => {
             const confetti = document.createElement('div');
             confetti.className = 'confetti-piece';
-            
+
             // Randomly choose between shapes and colored squares
             if (Math.random() > 0.5) {
                 confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
@@ -182,18 +194,18 @@ function createConfetti() {
                 confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
             }
-            
+
             confetti.style.left = Math.random() * 100 + 'vw';
             confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
             confetti.style.animationDelay = Math.random() * 0.5 + 's';
-            
+
             document.body.appendChild(confetti);
-            
+
             // Remove confetti after animation
             setTimeout(() => confetti.remove(), 5000);
         }, i * 30);
     }
-    
+
     // Keep creating confetti
     setInterval(() => {
         for (let i = 0; i < 5; i++) {
